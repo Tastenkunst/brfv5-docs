@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="css/docs.css">
+  <title>Beyond Reality Face SDK - BRFv5 - API reference</title>
+</head>
+<body>
+
+<div id="wrapper">
+
+  <div class="description">
+
+    <div id="logo">
+      <img id="img_logo" src="./assets/ui/brfv5-logo.png" alt="BRFv5 logo" />
+    </div>
+    <div class="menu">
+      <a href="what_can_i_do_with_it.html">What can I do with it?</a> |
+      <a href="index.html">API Reference</a> |
+      <a href="https://github.com/Tastenkunst" target="_blank">BRFv5 on Github</a> |
+      <a href="https://tastenkunst.github.io/brfv5-browser/" target="_blank">Demo</a>
+    </div>
+
+  </div>
+  <div class="spacer"></div>
+
+  <h1>BRFv5 - API Reference</h1>
+  <h2>Overview</h2>
+
+  <div class="description">
+    <p>
+      The BRFv5 API is the same for all platforms. Everything described on this page can be applied to JavaScript, ActionScript 3, C++ etc..<br><br>
+      Before you read this API, please take a look at what you can do with BRFv5, especially what results to expect from
+      Face Detection and Face Tracking (<a href="what_can_i_do_with_it.html">link: What can I do with it?</a>).<br><br>
+      There are three main classes: BRv5FManager, BRFv5Config and BRFv5Face.<br><br>
+    </p>
+  </div>
+
+  <div class="spacer"></div>
+
+  <h2 id="hl_BRFv5Manager">BRFv5Manager</h2>
+
+  <h4>Control Flow</h4>
+
+  <div class="description functionlist">
+
+    <p><a href="#configure">configure( config : BRFv5Config ) : void</a></p>
+    <p><a href="#update">update( image : ImageData ) : void</a></p>
+    <p><a href="#reset">reset() : void</a></p>
+
+  </div>
+
+  <h4>Face Detection)</h4>
+
+  <div class="description functionlist">
+
+    <p><a href="#getDetectedRects">getDetectedRects() : Vector&lt;BRFv5Rectangle&gt;</a></p>
+    <p><a href="#getMergedRects">getMergedRects() : Vector&lt;BRFv5Rectangle&gt;</a></p>
+
+  </div>
+
+  <h4>Face Tracking</h4>
+
+  <div class="description functionlist">
+
+    <p><a href="#getFaces">getFaces() : Vector&lt;BRFv5Face&gt;</a></p>
+
+  </div>
+
+  <div class="spacer"></div>
+
+  <h2 id="hl_BRFv5Config">BRFv5Config</h2>
+
+  <h4>Control Flow</h4>
+
+  <div class="description functionlist">
+
+    <p><a href="#enableFaceTracking">enableFaceTracking : Boolean</a></p>
+
+  </div>
+
+  <h4>imageConfig</h4>
+
+  <div class="description functionlist">
+
+    <p><a href="#ic_inputWidth">imageConfig.inputWidth : int</a></p>
+    <p><a href="#ic_inputHeight">imageConfig.inputHeight : int</a></p>
+
+  </div>
+
+  <h4>faceDetectionConfig</h4>
+
+  <div class="description functionlist">
+
+    <p><a href="#fdc_regionOfInterest">regionOfInterest : BRFv5Rectangle</a></p>
+
+    <p><a href="#fdc_minFaceSize">minFaceSize : int</a></p>
+    <p><a href="#fdc_maxFaceSize">maxFaceSize : int</a></p>
+
+    <p><a href="#fdc_faceSizeIncrease">faceSizeIncrease : int</a></p>
+    <p><a href="#fdc_stepSize">stepSize : int</a></p>
+    <p><a href="#fdc_minNumNeighbors">minNumNeighbors : int</a></p>
+
+    <p><a href="#fdc_rectMergeFactor">rectMergeFactor : float</a></p>
+    <p><a href="#fdc_rectSkipFactor">rectSkipFactor : float</a></p>
+
+    <p><a href="#fdc_filterNoise">filterNoise : Boolean</a></p>
+
+  </div>
+
+  <h4>faceTrackingConfig</h4>
+
+  <div class="description functionlist">
+
+    <p><a href="#ftc_regionOfInterest">regionOfInterest : BRFv5Rectangle</a></p>
+
+    <p><a href="#ftc_numFacesToTrack">numFacesToTrack : int</a></p>
+    <p><a href="#ftc_numTrackingPasses">numTrackingPasses : int</a></p>
+
+    <p><a href="#ftc_minFaceScaleStart">minFaceScaleStart : float</a></p>
+    <p><a href="#ftc_maxFaceScaleStart">maxFaceScaleStart : float</a></p>
+    <p><a href="#ftc_maxRotationXStart">maxRotationXStart : float</a></p>
+    <p><a href="#ftc_maxRotationYStart">maxRotationYStart : float</a></p>
+    <p><a href="#ftc_maxRotationZStart">maxRotationZStart : float</a></p>
+    <p><a href="#ftc_confidenceThresholdStart">confidenceThresholdStart : float</a></p>
+
+    <p><a href="#ftc_minFaceScaleReset">minFaceScaleReset : float</a></p>
+    <p><a href="#ftc_maxFaceScaleReset">maxFaceScaleReset : float</a></p>
+    <p><a href="#ftc_maxRotationXReset">maxRotationXReset : float</a></p>
+    <p><a href="#ftc_maxRotationYReset">maxRotationYReset : float</a></p>
+    <p><a href="#ftc_maxRotationZReset">maxRotationZReset : float</a></p>
+    <p><a href="#ftc_confidenceThresholdReset">confidenceThresholdReset : float</a></p>
+
+    <p><a href="#ftc_enableStabilizer">enableStabilizer : Boolean</a></p>
+    <p><a href="#ftc_enableFreeRotation">enableFreeRotation : Boolean</a></p>
+
+  </div>
+
+  <div class="spacer"></div>
+
+  <h2 id="hl_BRFv5Face">BRFv5Face</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description functionlist">
+    <p><a href="#state">state : String</a></p>
+    <p><a href="#confidence">confidence : float</a></p>
+    <p><a href="#landmarks">landmarks : Vector&lt;BRFv5Landmark&gt;</a></p>
+    <p><a href="#vertices">vertices : float[]</a></p>
+    <p><a href="#bounds">bounds : BRFv5Rectangle</a></p>
+    <p><a href="#scale">scale : float</a></p>
+    <p><a href="#translationX">translationX : float</a></p>
+    <p><a href="#translationY">translationY : float</a></p>
+    <p><a href="#rotationX">rotationX : float</a></p>
+    <p><a href="#rotationY">rotationY : float</a></p>
+    <p><a href="#rotationZ">rotationZ : float</a></p>
+  </div>
+
+  <div class="spacer"></div>
+
+  <h2 id="hl_BRFv5Rectangle">BRFv5Rectangle</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description functionlist">
+    <p><a href="#rect_x">x : float</a></p>
+    <p><a href="#rect_y">y : float</a></p>
+    <p><a href="#rect_width">width : float</a></p>
+    <p><a href="#rect_height">height : float</a></p>
+    <p><a href="#rect_setTo">setTo( x : float, y : float, width : float, height : float) : void</a></p>
+  </div>
+
+  <div class="spacer"></div>
+
+  <h2 id="hl_BRFv5Landmark">BRFv5Landmark</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description functionlist">
+    <p><a href="#landmark_x">x : float</a></p>
+    <p><a href="#landmark_y">y : float</a></p>
+    <p><a href="#landmark_setTo">setTo( x : float, y : float) : void</a></p>
+  </div>
+
+  <div class="spacer"></div>
+
+  <h2 id="hl_BRFv5State">BRFv5State</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description functionlist">
+    <p><a href="#state_FACE_DETECTION">FACE_DETECTION</a></p>
+    <p><a href="#state_FACE_TRACKING">FACE_TRACKING</a></p>
+    <p><a href="#state_RESET">RESET</a></p>
+  </div>
+
+  <div class="spacer"></div>
+
+
+
+
+  <div class="description">
+    <a class="link_top" href="#wrapper">&uarr; top</a>
+    <br>
+    <br>
+  </div>
+
+  <div class="spacer white"></div>
+
+
+
+
+  <div class="spacer"></div>
+
+  <h2>BRFv5Manager</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description">
+    <p>
+      <b>BRFv5Manager</b> controls the SDK.
+      <br><br>
+      BRFv5's configuration defaults are reasonably set for a 640x480 landscape input and to track a single face.
+      <br><br>
+      If that's the case for your app then you don't need to configure the SDK. But in most cases, you need
+      to call configure() before starting the tracking by calling update().
+      <br><br>
+      The JavaScript SDK package is a good example for that. It covers configuration for desktop, mobile,
+      landscape and portrait apps.
+      <br><br>
+      Please see <a href="#hl_BRFv5Config">BRFv5Config</a> for more info about each parameter.
+      <br><br>
+      To finish the configuration, once all BRFv5Config properties are set, call:
+      <br><br>
+      <b>configure( config : BRFv5Config )</b><br><br>
+      When everything is configured you need to prepare the input imageData before calling:
+      <br><br>
+      <b>update( image : ImageData )</b>
+      <br><br><br>
+      BRFv5 consists of two steps: <b>Face Detection</b> and <b>Face Tracking</b>.
+      <br><br>
+      Face Detection operates globally, it is not bound to a BRFv5Face.
+      <br><br>
+      The Face Detection results can be retrieved by calling:
+      <br><br>
+      <b>getDetectedRects() : Vector&lt;BRFv5Rectangle&gt;</b><br>
+      <b>getMergedRects() : Vector&lt;BRFv5Rectangle&gt;</b>
+      <br><br>
+      The merged rectangles are the starting areas for the Face Tracking step.
+      <br><br>
+      The detailed Face Tracking data can be retrieved by calling:
+      <br><br>
+      <b>getFaces() : Vector&lt;BRFv5Face&gt;</b><br><br>
+      which gives you a list of BRFv5Faces with a length based on your setting of:
+      <br><br>
+      <b>BRFv5Config.faceTrackingConfig.numFacesToTrack : int</b>
+      <br><br>
+      And that's all about it. Configure, then continuously update and use the results.
+      <br><br>
+      For more information about the implementation details for each specific platform, see the platform specific example packages.<br><br>
+    </p>
+  </div>
+
+  <h4>(control flow)</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="configure"><b>configure( config : BRFv5Config ) : void</b></p>
+    <p class="function_description">
+      This function configures the SDK. Please see <a href="#hl_BRFv5Config">BRFv5Config</a> for more information about each parameter.</p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="update"><b>update( image : ImageData ) : void</b></p>
+    <p class="function_description">
+      This function does the tracking job.
+      <br><br>
+      In C++ implementations, eg. OpenCV (camera handling) or iOS, you need to update the imageData on your own before calling update.
+      <br><br>
+      All other platforms have their known image containers and BRFv5 is already set up to deal with those.
+      <br><br>
+      The results can be retrieved after calling <b>update()</b> as arrays of <b>BRFv5Rectangle</b> or <b>BRFv5Face</b>:
+      <br><br>
+      <b>getDetectedRects() : Vector&lt;BRFv5Rectangle&gt;</b><br>
+      <b>getMergedRects() : Vector&lt;BRFv5Rectangle&gt;</b><br>
+      <b>getFaces() : Vector&lt;BRFv5Face&gt;</b>
+    </p>
+    <dl>
+      <dt class="parameter">imageData (a platform dependent image data type)</dt>
+      <dd>This is platform dependent. In C++ implementations, eg. OpenCV (camera handling) or iOS, you need to update
+        the imageData on your own before calling update. All other platforms have their known image containers and
+        BRFv5 is already set up to deal with those, eg. Android(Java): Bitmap, AS3: BitmapData etc.<br><br></dd>
+    </dl>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="reset">reset() : void</p>
+    <p class="function_description">
+      All face trackers reset and start over by performing Face Detection. And by the way: To pause the tracking, simply
+      don't call update anymore.
+    </p>
+  </div>
+
+  <h4>Face Detection</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="getDetectedRects">getDetectedRects( ) : Vector&lt;BRFv5Rectangle&gt;</p>
+    <p class="function_description">
+      Returns all rectangles in the image that the algorithm thinks is a face (blue). If enough of those rects are found
+      in one area a merged rectangle is created that is the starting area for the Face Tracking step. Will be empty if
+      all face trackers are active and no new face needs to be detected.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="getMergedRects">getMergedRects( ) : Vector&lt;BRFv5Rectangle&gt;</p>
+    <p class="function_description">
+      Returns all actual merged/detected faces (white) of the last update call. Will be empty if
+      all face trackers are active and no new face needs to be detected.
+    </p>
+  </div>
+
+  <h4>Face Tracking</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="getFaces">getFaces( ) : Vector&lt;BRFv5Face&gt;</p>
+    <p class="function_description">
+      Returns the list of currently tracked faces. The length of this list depends on your<br><br><b>BRFv5Config.faceTrackingConfig.numFacesToTrack : int</b><br><br> value.
+      <br><br>
+      Please see <a href="#hl_BRFv5Face">BRFv5Face</a> for details.
+    </p>
+    <a class="link_top" href="#hl_BRFv5Manager">&uarr; top</a>
+    <br>
+    <br>
+  </div>
+
+  <div class="spacer white"></div>
+
+
+
+
+  <div class="spacer"></div>
+
+  <h2>BRFv5Config</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description">
+    <p>
+      Setting the correct <b>BRFv5Config</b> parameters before you start tracking is crucial.
+      <br><br>
+      BRFv5's configuration defaults are reasonably set for a 640x480 landscape input and to track a single face.
+      <br><br>
+      But in most cases, you need
+      to call configure() before starting the tracking by calling update().
+      <br><br>
+      It's highly recommended to take a look at the JavaScript SDK package on GitHub to see how to configure BRFv5 for each use case.
+      <br><br><br>
+      Internally BRFv5 works on XYZx480 (landscape) or 480xXYZ (portrait) image for it's analysis. So 480px is the
+      base size that every other input size scales to (eg. 1280x720 -> 854x480 or 1920x1080 -> 854x480).
+      <br><br>
+      The minimum detectable face sizes for the following resolutions are:<br><br>
+
+      &nbsp;&nbsp;640 x &nbsp;&nbsp;480: 24px ( &nbsp;480 / 480 = 1.00 * 24 = 24) (base)<br>
+      1280 x &nbsp;&nbsp;720: 36px ( &nbsp;720 / 480 = 1.50 * 24 = 36)<br>
+      1920 x 1080: 54px (1080 / 480 = 2.25 * 24 = 54)<br><br>
+      </p>
+  </div>
+
+  <h4>(control flow)</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="enableFaceTracking"><b>enableFaceTracking : Boolean</b></p>
+    <p class="function_description">
+      If you don't need the Face Tracking part of BRFv5, set this value to false to deactivate it and only detect faces.
+      Might also come in handy, if you want to configure your Face Detection part properly.</p>
+  </div>
+
+  <h4>imageConfig</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="ic_inputWidth"><b>imageConfig.inputWidth : int</b></p>
+    <p class="function_description">
+      This value tells the SDK what width the input imageData will have. It's recommended to use a 640x480 or 480x640
+      imageData, since any other size will trigger an additional scaling step internally.</p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ic_inputHeight"><b>imageConfig.inputHeight : int</b></p>
+    <p class="function_description">
+      This value tells the SDK what height the input imageData will have. It's recommended to use a 640x480 or 480x640
+      imageData, since any other size will trigger an additional scaling step internally.</p>
+  </div>
+
+  <h4>faceDetectionConfig</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="fdc_regionOfInterest"><b>regionOfInterest : BRFv5Rectangle</b></p>
+    <p class="function_description">
+      Sets the region of interest, the area within the imageData where Face Detection is performed.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="fdc_minFaceSize"><b>minFaceSize : int</b></p>
+    <p class="function_description">
+      The minimum detectable face sizes (in pixel) for the following resolutions are:<br><br>
+
+      &nbsp;&nbsp;640 x &nbsp;&nbsp;480: 24px ( &nbsp;480 / 480 = 1.00 * 24 = 24) (base)<br>
+      1280 x &nbsp;&nbsp;720: 36px ( &nbsp;720 / 480 = 1.50 * 24 = 36)<br>
+      1920 x 1080: 54px (1080 / 480 = 2.25 * 24 = 54)<br>
+      <br>
+      Increase that value as much as possible for your use case. The smaller faces you
+      want to detect, the less performance you will get for Face Detection.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="fdc_maxFaceSize"><b>maxFaceSize : int</b></p>
+    <p class="function_description">
+      The maximum detectable face sizes (in pixel) for the following resolutions are:<br><br>
+
+      &nbsp;&nbsp;640 x &nbsp;&nbsp;480: 480px (base)<br>
+      1280 x &nbsp;&nbsp;720: 720px<br>
+      1920 x 1080: 1080px<br>
+      <br>
+      Not so much a performance hit, if you use the maximum possible value. But the smaller the better.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="fdc_faceSizeIncrease"><b>faceSizeIncrease : int</b></p>
+    <p class="function_description">
+      A value multiple of 12. Default is 24. Faces (detectedRects: blue) are detected in 'layers'. The detection window
+      size is increased by <b>faceSizeIncrease</b>. Setting this to 12 will double the amount of detection attempts, because
+      the detection windows will only grow by 12, instead of 24.
+
+      <br><br>For 24:<br><br>
+      &nbsp;&nbsp;640 x &nbsp;&nbsp;480: 24, &nbsp;&nbsp;48, &nbsp;&nbsp;72, ..., &nbsp;&nbsp;456, &nbsp;&nbsp;480<br>
+      1280 x &nbsp;&nbsp;720: 36, &nbsp;&nbsp;72, 108, ..., &nbsp;&nbsp;684, &nbsp;&nbsp;720<br>
+      1920 x 1080: 54, 108, 162, ..., 1026, 1080<br>
+      <br>For 12:<br><br>
+      &nbsp;&nbsp;640 x &nbsp;&nbsp;480: 24, 36, &nbsp;&nbsp;48, &nbsp;&nbsp;60, &nbsp;&nbsp;72, ..., &nbsp;&nbsp;456, &nbsp;&nbsp;468, &nbsp;&nbsp;480<br>
+      1280 x &nbsp;&nbsp;720: 36, 54, &nbsp;&nbsp;72, &nbsp;&nbsp;90, 108, ..., &nbsp;&nbsp;684, &nbsp;&nbsp;702, &nbsp;&nbsp;720<br>
+      1920 x 1080: 54, 81, 108, 135, 162, ..., 1026, 1053, 1080<br>
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="fdc_stepSize"><b>stepSize : int</b></p>
+    <p class="function_description">
+      Values: 0 (default, means it's dynamically adjusted by the SDK), (don't set it to 1, this will kill your app), >= 2
+      <br><br>
+      At a window size layer the detection window will move by <b>stepSize</b> in x direction and once it's at the end of
+      the row, will move <b>stepSize</b> in y direction and do the next row.
+      <br><br>
+      0 is the (recommended) default. The SDK will have a smaller stepSize for smaller windows and a larger stepSize for larger windows.<br>
+      2 is the most detailed detection, but performs the slowest.<br>
+      > 2 might be sufficient for your use case, but 0 is recommended.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="fdc_minNumNeighbors"><b>minNumNeighbors : int</b></p>
+    <p class="function_description">
+      Detected faces (blue) get merged (white) if they are<br><br>
+      + roughly placed in the same location,<br>
+      + roughly the same size and<br>
+      + <b>have at least minNumNeighbors of other detected faces in the same spot.</b>
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="fdc_rectMergeFactor"><b>rectMergeFactor : float</b></p>
+    <p class="function_description">
+      Detected faces (blue) get merged (white) if they are<br><br>
+      + <b>roughly placed in the same location,</b><br>
+      + roughly the same size and<br>
+      + have at least minNumNeighbors of other detected faces in the same spot.<br>
+      <br>
+      <b>rectMergeFactor</b> is used to check if the center points of detected rects are close together
+      and not more than rectMergeFactor * width px away from each other.<br>
+      0.0 won't create merged rectangles.<br>
+      1.0 would merge rectangles, even if they are width px apart.<br>
+      Default: 0.2, don't bother, I guess.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="fdc_rectSkipFactor"><b>rectSkipFactor : float</b></p>
+    <p class="function_description">
+      <b>rectSkipFactor</b> is used to skip detection windows that are less rectSkipFactor * width px away from an already
+      merged rectangle.<br>
+      0.0 won't skip any rectangles.<br>
+      1.0 would skip rectangles, even if they are width px apart.<br>
+      Default: 0.5, don't bother, I guess.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="fdc_filterNoise"><b>filterNoise : Boolean</b></p>
+    <p class="function_description">
+      If true, filters all detected rectangles, that don't belong to a merged rectangle.
+      If false, detectedRects will include all stray detected rects.
+    </p>
+  </div>
+
+  <h4>faceTrackingConfig</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_regionOfInterest"><b>regionOfInterest : BRFv5Rectangle</b></p>
+    <p class="function_description">
+      If a tracked faces moves outside of this area, it's being reset.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_numFacesToTrack"><b>numFacesToTrack : int</b></p>
+    <p class="function_description">
+      The number of faces to track. Default is 1 (single Face Tracking). The more detailed face trackings
+      you want to do in parallel, the slower the SDK will perform. Two faces might be possible in real time, anything
+      more than that won't be real time anymore.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_numTrackingPasses"><b>numTrackingPasses : int</b></p>
+    <p class="function_description">
+      Values: 1, 2, 3, 4, 5, 6. Default: 3.<br><br>
+      The number of Face Tracking passes on a face. If this value is >=3 a simple <a href="#confidence">confidence</a> value
+      is calculated, that helps resetting the face, if it was lost.
+      The more tracking passes you perform, the slower the tracking will be. It's a trade-off between fast execution and
+      accuracy. The JavaScript SDK examples set numTrackingPasses dynamically depending on the CPU usage.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_minFaceScaleStart"><b>minFaceScaleStart : float</b></p>
+    <p class="function_description">
+      By setting these *Start parameters you can control the conditions for picking up a face. Restrict the distance/range to
+      the camera by setting minFaceScaleStart and maxFaceScaleStart. Smaller values mean more distance to the camera. Restricting
+      the starting angles may help to create a consistent user experience.<br><br>
+
+      If <b>BRFv5Face.scale</b> is smaller than <b>minFaceScaleStart</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_maxFaceScaleStart"><b>maxFaceScaleStart : float</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.scale</b> is larger than <b>maxFaceScaleStart</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_maxRotationXStart"><b>maxRotationXStart : float</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.rotationX</b> is larger than <b>maxRotationXStart</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_maxRotationYStart"><b>maxRotationYStart : float</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.rotationY</b> is larger than <b>maxRotationYStart</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_maxRotationZStart"><b>maxRotationZStart : float</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.rotationZ</b> is larger than <b>maxRotationZStart</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_confidenceThresholdStart"><b>confidenceThresholdStart : int</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.confidence</b> is smaller than <b>confidenceThresholdStart</b>, the face is reset and not tracked
+      (only applies, if <b>BRFv5Config.faceTrackingConfig.numTrackingPasses >= 3</b>).
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_minFaceScaleReset"><b>minFaceScaleReset : float</b></p>
+    <p class="function_description">
+      By setting these parameters you can control the conditions for resetting the tracking of a face.<br><br>
+      If <b>BRFv5Face.scale</b> is smaller than <b>minFaceScaleReset</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_maxFaceScaleReset"><b>maxFaceScaleReset : float</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.scale</b> is larger than <b>maxFaceScaleReset</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_maxRotationXReset"><b>maxRotationXReset : float</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.rotationX</b> is larger than <b>maxRotationXReset</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_maxRotationYReset"><b>maxRotationYReset : float</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.rotationY</b> is larger than <b>maxRotationYReset</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_maxRotationZReset"><b>maxRotationZReset : float</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.rotationZ</b> is larger than <b>maxRotationZReset</b>, the face is reset and not tracked.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_confidenceThresholdReset"><b>confidenceThresholdReset : int</b></p>
+    <p class="function_description">
+      If <b>BRFv5Face.confidence</b> is smaller than <b>confidenceThresholdReset</b>, the face is reset and not tracked
+      (only applies, if <b>BRFv5Config.faceTrackingConfig.numTrackingPasses >= 3</b> and if confidenceThresholdReset > 0.0).
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_enableStabilizer"><b>enableStabilizer : Boolean</b></p>
+    <p class="function_description">
+      BRFv5 stabilizes fast and slow movements. You can turn that off, eg. if your users will have their face
+      always in the same spot, to save some CPU cycles.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="ftc_enableFreeRotation"><b>enableFreeRotation : Boolean</b></p>
+    <p class="function_description">
+      BRFv5 makes it possible to tilt the head more than 90 degrees (rotationZ). There is some extra calculations
+      involved to achieve this. Turn it off to restrict the head tilt to 34 degrees and save some CPU cycles.
+    </p>
+    <a class="link_top" href="#hl_BRFv5Config">&uarr; top</a>
+    <br>
+    <br>
+  </div>
+
+  <div class="spacer white"></div>
+
+
+
+
+
+  <div class="spacer"></div>
+
+  <h2>BRFv5Face</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description">
+
+    <p>
+      BRFv5Face holds all information about a tracked face. BRFv5 is able to track more than one face, so every
+      BRFv5Face has it's individual state and tracked properties. BRFv5 sets the state automatically depending on the
+      detection or tracking results.
+      <br><br>
+      BRFv5 includes two types of models. Models with 68 landmarks (standard) and models with 42 landmarks (for 3D object
+      placement). In the 42 landmark models the indices 37, 38, 40, 41, 43, 44, 46, 47 and all mouth landmarks,
+      except 60 and 64 are missing.<br><br>
+      <img src="assets/ui/brfv5_landmarks.jpg" alt="BRFv5 landmarks." style="width: 480px; max-width: 100%;"/><br><br>
+      The origin for the 3D transformation (scale, translationX, translationY, rotationX, rotationY, rotationZ)
+      is right behind landmark index 27 (top of the nose). So if you want to put a 3D object or PNG file on top of a
+      tracked face you know exactly where to position it.<br><br>
+    </p>
+  </div>
+
+  <h4>&nbsp;</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="state"><b>state : String</b></p>
+    <p class="function_description">
+      The state of the face. It depends on the current tracking results and is
+      either one of the following <b>BRFv5States</b>:</p>
+    <dl>
+      <dt class="parameter"><b>BRFv5State.RESET</b></dt>
+      <dd>This face was reset because of a call to <b>BRFv5Manager.reset()</b> or because it exceeded the reset parameters.</dd>
+
+      <dt class="parameter"><b>BRFv5State.FACE_DETECTION</b></dt>
+      <dd>BRFv5 is looking for a face, but still found not enough evidence.</dd>
+
+      <dt class="parameter"><b>BRFv5State.FACE_TRACKING</b></dt>
+      <dd>BRFv5 aligned the face and is now tracking it.</dd>
+    </dl>
+    <br>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="confidence"><b>confidence : float</b></p>
+    <p class="function_description">
+      When <b>BRFv5Config.faceTrackingConfig.numTrackingPasses</b> >= 3, a simple confidence value is calculated.
+      This value lies between 0.0 and 1.0. Usually you want >= 0.8 value for the start and if it drops to 0.0,
+      the face was lost (maybe through fast movements or bad lighting conditions). This value is just a difference
+      calculation of the different tracking passes, nothing too fancy.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="vertices"><b>vertices : float[]</b></p>
+    <p class="function_description">
+      An array of landmark positions in the form of [x, y, x, y, ..., x, y], length is therefore: 68 * 2 (or 42 * 2)<br><br>
+      <img src="assets/ui/brfv5_landmarks.jpg" alt="BRFv5 landmarks." width="480" height="360"/><br><br>
+      Getting the position of a certain landmark would be like:
+      <br><br>
+      <b>var vx = vertices[index * 2];</b> // where index is eg. 27 for the top of the nose.<br>
+      <b>var vy = vertices[index * 2 + 1];</b><br>
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="landmarks"><b>landmarks : Vector&lt;BRFv5Landmark&gt;</b></p>
+    <p class="function_description">
+      Same as vertices, but a list of points in the form of [{x, y}, {x, y}, ..., {x, y}], length is therefore: 68 (or 42).
+      <br><br>
+      Getting the position of a certain point would be like:
+      <br><br>
+      <b>var px = landmarks[index].x;</b> // where index is eg. 27 for the top of the nose.<br>
+      <b>var py = landmarks[index].y;</b><br>
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="bounds"><b>bounds : BRFv5Rectangle</b></p>
+    <p class="function_description">
+      This is the outline rectangle of all landmarks.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="scale"><b>scale : float</b></p>
+    <p class="function_description">
+      The scale of the whole face.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="translationX"><b>translationX : float</b></p>
+    <p class="function_description">
+      The x position of the origin of face on the image. The origin is right behind landmark index 27 (top of the nose).
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="translationY"><b>translationY : float</b></p>
+    <p class="function_description">
+      The y position of the origin of face on the image. The origin is right behind landmark index 27 (top of the nose).
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="rotationX"><b>rotationX : float</b></p>
+    <p class="function_description">
+      A degree angle. Rotation around the X axis (pitch, turning head up/down)
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="rotationY"><b>rotationY : float</b></p>
+    <p class="function_description">
+      A degree angle. Rotation around the Y axis (yaw, turning head to the left/right)
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="rotationZ"><b>rotationZ : float</b></p>
+    <p class="function_description">
+      A degree angle. Rotation around the Z axis (roll, tilt head to the left/right)
+    </p>
+    <a class="link_top" href="#hl_BRFv5Face">&uarr; top</a>
+    <br>
+    <br>
+  </div>
+
+
+
+  <div class="spacer"></div>
+
+  <h2>BRFv5Rectangle</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description">
+    <p>
+      A BRFv5Rectangle is a rectangle, which marks an area. Usually used to define regions of interest.
+    </p>
+  </div>
+
+  <h4>&nbsp;</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="rect_x"><b>x : float</b></p>
+    <p class="function_description">
+      The x value of that rectangle.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="rect_y"><b>y : float</b></p>
+    <p class="function_description">
+      The y value of that rectangle.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="rect_width"><b>width : float</b></p>
+    <p class="function_description">
+      The width value of that rectangle.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="rect_height"><b>height : float</b></p>
+    <p class="function_description">
+      The height value of that rectangle.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="rect_setTo"><b>setTo( x : float, y : float, width : float, height : float) : void</b></p>
+    <p class="function_description">
+      With this function x, y, width and height can be set in one go.
+    </p>
+    <a class="link_top" href="#hl_BRFv5Rectangle">&uarr; top</a>
+    <br>
+    <br>
+  </div>
+
+
+
+  <div class="spacer"></div>
+
+  <h2>BRFv5Landmark</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description">
+    <p>
+      A BRFv5Landmark is a point with x and y property. A convenience class.
+    </p>
+  </div>
+
+  <h4>&nbsp;</h4>
+
+  <div class="description">
+
+    <p class="function_name" id="landmark_x"><b>x : float</b></p>
+    <p class="function_description">
+      The x value of that landmark. (Yeah!)
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="landmark_y"><b>y : float</b></p>
+    <p class="function_description">
+      The y value of that landmark. (Seriously!)
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="landmark_setTo"><b>setTo( x : float, y : float) : void</b></p>
+    <p class="function_description">
+      With this function x and y can be set in one go.
+    </p>
+    <a class="link_top" href="#hl_BRFv5Landmark">&uarr; top</a>
+    <br>
+    <br>
+  </div>
+
+
+
+  <div class="spacer"></div>
+
+  <h2>BRFv5State</h2>
+
+  <div class="spacer"></div>
+
+  <div class="description">
+    <p>A BRFv5Face can be in one of the following states.</p>
+  </div>
+
+  <h4>&nbsp;</h4>
+  <div class="description">
+
+    <p class="function_name" id="state_FACE_DETECTION"><b>FACE_DETECTION : String</b></p>
+    <p class="function_description">
+      The BRFv5Face tried to initially detect a face in the image data. If <b>BRFv5Config.enableFaceTracking</b> = false,
+      the BRFv5Face will always be in this state, except when you called <b>BRFv5Manager.reset()</b> manually.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="state_FACE_TRACKING"><b>FACE_TRACKING : String</b></p>
+    <p class="function_description">
+      For this BRFv5Face Face Tracking was performed and all properties (landmarks, vertices, translationX etc.) were updated.
+    </p>
+  </div>
+
+  <div class="description">
+
+    <p class="function_name" id="state_RESET"><b>RESET : String</b></p>
+    <p class="function_description">
+      The BRFv5Face triggered a reset or you called <b>BRFv5Manager.reset()</b> manually. Resetting occurs automatically, if
+      a *Start or *Reset parameter was exceeded, or, if <b>BRFv5Config.faceTrackingConfig.numFacesToTrack</b> >= 3, the confidence value is lower than expected.
+    </p>
+    <a class="link_top" href="#hl_BRFv5State">&uarr; top</a>
+    <br>
+    <br>
+  </div>
+
+  <div class="spacer"></div>
+
+</div>
+</body>
+</html>
